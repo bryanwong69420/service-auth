@@ -4,7 +4,6 @@ import com.mcp.authservice.config.security.TokenProvider;
 import com.mcp.authservice.constants.ApiConstants;
 import com.mcp.authservice.constants.RedisDbKeys;
 import com.mcp.authservice.dto.request.LoginRequestDTO;
-import com.mcp.authservice.dto.request.RegisterUserDTO;
 import com.mcp.authservice.dto.response.ApiDTO;
 import com.mcp.authservice.dto.response.JwtDTO;
 import com.mcp.authservice.service.UserDetailsImpl;
@@ -38,7 +37,6 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
     private final RedisUtil redisUtil;
-    private final
 
 
     @PostMapping(ApiConstants.LOGIN_ENDPOINT)

@@ -20,6 +20,6 @@ public class UserVo implements Serializable {
     private String password;
     private String email;
     private Set<RoleVo> roles = new HashSet<>();
-    private LocalDateTime last_login_at;
-    private RefreshTokenVo refreshTokenVO;
+    private LocalDateTime lastLoginAt;
+    private RefreshTokenVo refreshTokenVo;
 }
