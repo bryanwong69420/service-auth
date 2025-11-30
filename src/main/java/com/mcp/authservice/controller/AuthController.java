@@ -64,7 +64,7 @@ public class AuthController {
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 
-            return ResponseEntity.ok(new JwtDTO(jwt, userDetails.getRefreshTokenVo().getRef_token(), expiryDuration,
+            return ResponseEntity.ok(new JwtDTO(jwt, userDetails.getRefreshTokenVo().getRefreshToken(), expiryDuration,
                     userDetails.getId(),
                     userDetails.getUsername(),
                     userDetails.getEmail(),
@@ -76,8 +76,5 @@ public class AuthController {
         }
 
     }
-
-
-
 
 }

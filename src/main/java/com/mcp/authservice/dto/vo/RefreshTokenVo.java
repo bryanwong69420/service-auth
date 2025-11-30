@@ -1,5 +1,6 @@
 package com.mcp.authservice.dto.vo;
 
+import com.mcp.authservice.utils.JsonEpochMilli;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 public class RefreshTokenVo implements Serializable {
     private long id;
     private Long userId;
-    private String ref_token;
-    private LocalDateTime exp_date;
+    private String refreshToken;
+    @JsonEpochMilli
+    private LocalDateTime expDate;
 }

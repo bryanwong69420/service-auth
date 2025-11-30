@@ -1,5 +1,6 @@
 package com.mcp.authservice.dto.vo;
 
+import com.mcp.authservice.utils.JsonEpochMilli;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,6 @@ public class UserVo implements Serializable {
     private String password;
     private String email;
     private Set<RoleVo> roles = new HashSet<>();
-    private LocalDateTime lastLoginAt;
+    private String lastLoginAt;
     private RefreshTokenVo refreshTokenVo;
 }

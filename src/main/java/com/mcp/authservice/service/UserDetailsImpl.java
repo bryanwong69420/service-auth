@@ -25,7 +25,7 @@ public class UserDetailsImpl implements UserDetails {
     private String email;
     private String password;
     private Set<RoleVo> roles;
-    private LocalDateTime last_login_at;
+    private String last_login_at;
     private RefreshTokenVo refreshTokenVo;
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -33,7 +33,7 @@ public class UserDetailsImpl implements UserDetails {
         List<GrantedAuthority> authorities = vo.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
-        return new UserDetailsImpl(vo.getId(), vo.getUsername(), vo.getPassword(), vo.getEmail(), vo.getRoles(),
+        return new UserDetailsImpl(vo.getId(), vo.getUsername(),  vo.getEmail(), vo.getPassword(), vo.getRoles(),
                 vo.getLastLoginAt(), vo.getRefreshTokenVo(), authorities);
     }
 
