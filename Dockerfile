@@ -1,5 +1,5 @@
-# Use an OpenJDK 17 base image
-FROM openjdk:17 AS builder
+# Use an eclipse-temurin 17 base image
+FROM eclipse-temurin:17-jdk AS builder
 
 # Get build arguments
 ARG TZ
@@ -22,7 +22,7 @@ RUN java -Xshare:off -XX:DumpLoadedClassList=classes.lst -jar app.jar --spring.m
 RUN java -Xshare:dump -XX:SharedClassListFile=classes.lst -XX:SharedArchiveFile=${SERVICE_NAME}-cds.jsa -jar app.jar || true
 
 # Use a clean JDK runtime for the final image
-FROM openjdk:17
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
