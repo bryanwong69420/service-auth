@@ -7,11 +7,14 @@ import com.mcp.authservice.dto.request.LoginRequestDTO;
 import com.mcp.authservice.dto.request.SignUpRequestDTO;
 import com.mcp.authservice.dto.response.ApiDTO;
 import com.mcp.authservice.dto.response.JwtDTO;
+import com.mcp.authservice.dto.vo.SignUpRequestVo;
+import com.mcp.authservice.feign.UserServiceClient;
 import com.mcp.authservice.service.UserDetailsImpl;
 import com.redis.redisutil.util.RedisUtil;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,6 +41,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
+    private final UserServiceClient userServiceClient;
     private final RedisUtil redisUtil;
 
 
@@ -79,7 +84,24 @@ public class AuthController {
 
     @PostMapping(ApiConstants.SIGN_UP_ENDPOINT)
     public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequestDTO signUpRequestDTO) {
+        log.info("User sign in with username and email: {} - {}", signUpRequestDTO.getUsername(), signUpRequestDTO.getEmail());
 
+        SignUpRequestVo signUpRequestVo = new SignUpRequestVo();
+        signUpRequestVo.setUsername(signUpRequestVo.getUsername());
+        signUpRequestVo.setEmail(signUpRequestDTO.getEmail());
+        signUpRequestVo.setPassword(signUpRequestVo.getPassword());
+
+        Optional<String> result = Optional.ofNullable(userServiceClient.signUp(signUpRequestVo).getBody());
+        return result
+                .filter("ok"::equalsIgnoreCase)
+                .map(response -> {
+                    log.info("User signed in successfully: {}", signUpRequestDTO.getUsername());
+                    return new ResponseEntity<>(new ApiDTO(true, "User signed up successfully!"), HttpStatus.OK);
+                })
+                .orElseGet(() -> {
+                    log.error("User signed in failed: {}", signUpRequestDTO.getUsername());
+                    return new ResponseEntity<>(new ApiDTO(false, result.orElse("User signed in failed!")), HttpStatus.INTERNAL_SERVER_ERROR);
+                });
     }
 
 }

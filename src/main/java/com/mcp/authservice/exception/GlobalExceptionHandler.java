@@ -20,6 +20,7 @@
 
 package com.mcp.authservice.exception;
 
+import com.mcp.authservice.dto.response.ApiDTO;
 import jakarta.persistence.PersistenceException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,8 @@ import java.sql.SQLException;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleGeneralException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
+    public ResponseEntity<ApiDTO> handleGeneralException(Exception ex) {
+        return new ResponseEntity<>(new ApiDTO(false, ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }
