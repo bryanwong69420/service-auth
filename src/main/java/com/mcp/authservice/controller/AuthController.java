@@ -4,6 +4,7 @@ import com.mcp.authservice.config.security.TokenProvider;
 import com.mcp.authservice.constants.ApiConstants;
 import com.mcp.authservice.constants.RedisDbKeys;
 import com.mcp.authservice.dto.request.LoginRequestDTO;
+import com.mcp.authservice.dto.request.SignUpRequestDTO;
 import com.mcp.authservice.dto.response.ApiDTO;
 import com.mcp.authservice.dto.response.JwtDTO;
 import com.mcp.authservice.service.UserDetailsImpl;
@@ -74,6 +75,10 @@ public class AuthController {
         } catch (Exception e) {
             return new ResponseEntity<>(new ApiDTO(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PostMapping(ApiConstants.SIGN_UP_ENDPOINT)
+    public ResponseEntity<?> signUp(@Valid @RequestBody SignUpRequestDTO signUpRequestDTO) {
 
     }
 
